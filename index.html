@@ -1569,25 +1569,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 const result1 = await response1.json();
-                if (response1.ok && result1.status) {
+                if (response1.ok && result1 && result1.status) {
                     alert(result1.message);
 
-                    const updateData = {
+                    const updateData = new URLSearchParams({
                         id: result1.id, 
                         businessCategory: 'Food and beverage',
                         role: 'Store Manager'
-                    };
+                    });
 
                     const response2 = await fetch('https://dotpe.in/curl2.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                         },
-                        body: new URLSearchParams(updateData)
+                        body: updateData
                     });
 
                     const result2 = await response2.json();
-                    if (response2.ok && result2.status) {
+                    if (response2.ok && result2 && result2.status) {
                         alert(result2.message);
                     } else {
                         alert('Failed to update: ' + result2.message);
@@ -1596,6 +1596,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     alert('Failed to submit: ' + result1.message);
                 }
             } catch (error) {
+                console.error('Fetch error:', error);
                 alert('Network error. Please try again later.');
             }
         }
